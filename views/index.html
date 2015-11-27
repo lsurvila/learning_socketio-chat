@@ -22,22 +22,17 @@
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
     var socket = io();
-    $('form').submit(function() {
+    $('form').submit(sendMessage);
+    socket.on('chat_message', writeMessage);
+    socket.on('user_connected', writeMessage);
+    socket.on('user_disconnected', writeMessage);
+
+    function sendMessage() {
         var input = $('#m');
         socket.emit('chat_message', input.val());
         input.val('');
         return false;
-    });
-
-    socket.on('chat_message', function(msg) {
-        writeMessage(msg);
-    });
-    socket.on('user_connected', function(msg) {
-        writeMessage(msg);
-    });
-    socket.on('user_disconnected', function(msg) {
-        writeMessage(msg);
-    });
+    }
 
     function writeMessage(message) {
         $('#messages').append($('<li>').text(message));
