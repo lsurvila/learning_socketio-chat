@@ -8,12 +8,14 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-    io.emit('user_connected', 'user connected');
+    io.emit('user_connected', socket.id + ' connected');
+
     socket.on('chat_message', function(msg) {
-        io.emit('chat_message', msg);
+        io.emit('chat_message', socket.id + ": " + msg);
     });
+
     socket.on('disconnect', function() {
-        io.emit('user_disconnected', 'user disconnected');
+        io.emit('user_disconnected', socket.id + ' disconnected');
     });
 });
 

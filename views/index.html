@@ -16,7 +16,7 @@
 <body>
 <ul id="messages"></ul>
 <form action="">
-    <input id="m" autocomplete="off" /><button>Send</button>
+    <input id="m" autocomplete="off" title="message_input"/><button>Send</button>
 </form>
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -28,6 +28,7 @@
         input.val('');
         return false;
     });
+
     socket.on('chat_message', function(msg) {
         writeMessage(msg);
     });
@@ -37,6 +38,7 @@
     socket.on('user_disconnected', function(msg) {
         writeMessage(msg);
     });
+
     function writeMessage(message) {
         $('#messages').append($('<li>').text(message));
     }
